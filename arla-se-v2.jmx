@@ -11,6 +11,16 @@
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
     </TestPlan>
     <hashTree>
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+        <collectionProp name="Arguments.arguments">
+          <elementProp name="path_to_file" elementType="Argument">
+            <stringProp name="Argument.name">path_to_file</stringProp>
+            <stringProp name="Argument.value">D:\Source\Urls-picker\result.txt</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+        </collectionProp>
+      </Arguments>
+      <hashTree/>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Thread Group" enabled="true">
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller" enabled="true">
@@ -137,12 +147,13 @@ description = vars.get(&quot;description&quot;);
 og_title = vars.get(&quot;og_title&quot;);
 og_description = vars.get(&quot;og_description&quot;);
 h1 = vars.get(&quot;h1&quot;);
+path_to_file = vars.get(&quot;path_to_file&quot;);
 
 //log.info(email);  // if you want to log something to jmeter.log file
 
 // Pass true if you want to append to existing file
 // If you want to overwrite, then don&apos;t pass the second argument
-f = new FileOutputStream(&quot;D:/result.txt&quot;, true);
+f = new FileOutputStream(path_to_file, true);
 p = new PrintStream(f); 
 this.interpreter.setOut(p); 
 print(page + &quot;,&quot; + title + &quot;,&quot; + description + &quot;,&quot; + og_title + &quot;,&quot; + og_description + &quot;,&quot; + h1 );
