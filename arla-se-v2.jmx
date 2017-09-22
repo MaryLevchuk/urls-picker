@@ -11,7 +11,7 @@
       <stringProp name="TestPlan.user_define_classpath"></stringProp>
     </TestPlan>
     <hashTree>
-      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables" enabled="true">
+      <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables 123" enabled="true">
         <collectionProp name="Arguments.arguments">
           <elementProp name="path_to_file" elementType="Argument">
             <stringProp name="Argument.name">path_to_file</stringProp>
