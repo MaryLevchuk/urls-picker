@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jmeterTestPlan version="1.2" properties="3.1" jmeter="3.1 r1770033">
+<jmeterTestPlan version="1.2" properties="3.2" jmeter="3.2 r1790748">
   <hashTree>
     <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan" enabled="true">
       <stringProp name="TestPlan.comments"></stringProp>
@@ -13,14 +13,19 @@
     <hashTree>
       <Arguments guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables 123" enabled="true">
         <collectionProp name="Arguments.arguments">
-          <elementProp name="path_to_file" elementType="Argument">
-            <stringProp name="Argument.name">path_to_file</stringProp>
-            <stringProp name="Argument.value">D:\Source\Urls-picker\result1.txt</stringProp>
+          <elementProp name="path_to_result" elementType="Argument">
+            <stringProp name="Argument.name">path_to_result</stringProp>
+            <stringProp name="Argument.value">K:\Source\Urls-Picker\Result\result-16001-24000.txt</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="path_to_source" elementType="Argument">
             <stringProp name="Argument.name">path_to_source</stringProp>
-            <stringProp name="Argument.value">D:\Source\Urls-picker\urls-source-tab.txt</stringProp>
+            <stringProp name="Argument.value">K:\Source\Urls-Picker\TXT\urls-draft-16001-24000.txt</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="domain" elementType="Argument">
+            <stringProp name="Argument.name">domain</stringProp>
+            <stringProp name="Argument.value">www.arla.se</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
         </collectionProp>
@@ -42,11 +47,11 @@
       </ThreadGroup>
       <hashTree>
         <WhileController guiclass="WhileControllerGui" testclass="WhileController" testname="While Controller" enabled="true">
-          <stringProp name="WhileController.condition">${page}</stringProp>
+          <stringProp name="WhileController.condition">&quot;${page}&quot; != &quot;&quot;</stringProp>
         </WhileController>
         <hashTree>
           <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Config" enabled="true">
-            <stringProp name="delimiter">,</stringProp>
+            <stringProp name="delimiter">\t</stringProp>
             <stringProp name="fileEncoding"></stringProp>
             <stringProp name="filename">${path_to_source}</stringProp>
             <boolProp name="quotedData">false</boolProp>
@@ -54,78 +59,84 @@
             <stringProp name="shareMode">shareMode.all</stringProp>
             <boolProp name="stopThread">false</boolProp>
             <stringProp name="variableNames">page</stringProp>
+            <boolProp name="ignoreFirstLine">false</boolProp>
           </CSVDataSet>
           <hashTree/>
-          <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${page}" enabled="true">
-            <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
-              <collectionProp name="Arguments.arguments"/>
-            </elementProp>
-            <stringProp name="HTTPSampler.domain">${page}</stringProp>
-            <stringProp name="HTTPSampler.port"></stringProp>
-            <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-            <stringProp name="HTTPSampler.response_timeout"></stringProp>
-            <stringProp name="HTTPSampler.protocol">https</stringProp>
-            <stringProp name="HTTPSampler.contentEncoding"></stringProp>
-            <stringProp name="HTTPSampler.path"></stringProp>
-            <stringProp name="HTTPSampler.method">GET</stringProp>
-            <boolProp name="HTTPSampler.follow_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
-            <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
-            <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-            <boolProp name="HTTPSampler.monitor">false</boolProp>
-            <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
-          </HTTPSamplerProxy>
+          <IfController guiclass="IfControllerPanel" testclass="IfController" testname="If Controller" enabled="true">
+            <stringProp name="IfController.condition">&quot;${page}&quot; != &quot;&quot;</stringProp>
+            <boolProp name="IfController.evaluateAll">false</boolProp>
+          </IfController>
           <hashTree>
-            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="getTitle" enabled="true">
-              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-              <stringProp name="RegexExtractor.refname">title</stringProp>
-              <stringProp name="RegexExtractor.regex">&lt;title&gt;(.*?)&lt;/title&gt;</stringProp>
-              <stringProp name="RegexExtractor.template">$1$</stringProp>
-              <stringProp name="RegexExtractor.default"></stringProp>
-              <stringProp name="RegexExtractor.match_number">1</stringProp>
-            </RegexExtractor>
-            <hashTree/>
-            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="getOG_Title" enabled="true">
-              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-              <stringProp name="RegexExtractor.refname">og_title</stringProp>
-              <stringProp name="RegexExtractor.regex">&lt;meta property=&quot;og:title&quot; content=(.*?) /&gt;</stringProp>
-              <stringProp name="RegexExtractor.template">$1$</stringProp>
-              <stringProp name="RegexExtractor.default"></stringProp>
-              <stringProp name="RegexExtractor.match_number">1</stringProp>
-            </RegexExtractor>
-            <hashTree/>
-            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="getDescription" enabled="true">
-              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-              <stringProp name="RegexExtractor.refname">description</stringProp>
-              <stringProp name="RegexExtractor.regex">&lt;meta name=&quot;description&quot; content=(.*?) /&gt;</stringProp>
-              <stringProp name="RegexExtractor.template">$1$</stringProp>
-              <stringProp name="RegexExtractor.default"></stringProp>
-              <stringProp name="RegexExtractor.match_number">1</stringProp>
-            </RegexExtractor>
-            <hashTree/>
-            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="getOG_Description" enabled="true">
-              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-              <stringProp name="RegexExtractor.refname">og_description</stringProp>
-              <stringProp name="RegexExtractor.regex">&lt;meta property=&quot;og:description&quot; content=(.*?) /&gt;</stringProp>
-              <stringProp name="RegexExtractor.template">$1$</stringProp>
-              <stringProp name="RegexExtractor.default"></stringProp>
-              <stringProp name="RegexExtractor.match_number">1</stringProp>
-            </RegexExtractor>
-            <hashTree/>
-            <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="getH1" enabled="true">
-              <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-              <stringProp name="RegexExtractor.refname">h1</stringProp>
-              <stringProp name="RegexExtractor.regex">&lt;h1 class=&quot;search-modal__h1&quot;&gt;(.*?)&lt;/h1&gt;</stringProp>
-              <stringProp name="RegexExtractor.template">$1$</stringProp>
-              <stringProp name="RegexExtractor.default"></stringProp>
-              <stringProp name="RegexExtractor.match_number">1</stringProp>
-            </RegexExtractor>
-            <hashTree/>
-            <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor" enabled="true">
-              <stringProp name="filename"></stringProp>
-              <stringProp name="parameters"></stringProp>
-              <boolProp name="resetInterpreter">false</boolProp>
-              <stringProp name="script">import java.utils.*;
+            <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="${page}" enabled="true">
+              <elementProp name="HTTPsampler.Arguments" elementType="Arguments" guiclass="HTTPArgumentsPanel" testclass="Arguments" enabled="true">
+                <collectionProp name="Arguments.arguments"/>
+              </elementProp>
+              <stringProp name="HTTPSampler.domain">${domain}</stringProp>
+              <stringProp name="HTTPSampler.port"></stringProp>
+              <stringProp name="HTTPSampler.protocol">https</stringProp>
+              <stringProp name="HTTPSampler.contentEncoding"></stringProp>
+              <stringProp name="HTTPSampler.path">${path}</stringProp>
+              <stringProp name="HTTPSampler.method">GET</stringProp>
+              <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
+              <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
+              <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
+              <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
+              <boolProp name="HTTPSampler.BROWSER_COMPATIBLE_MULTIPART">true</boolProp>
+              <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+              <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+              <stringProp name="HTTPSampler.response_timeout"></stringProp>
+            </HTTPSamplerProxy>
+            <hashTree>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="getTitle" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                <stringProp name="RegexExtractor.refname">title</stringProp>
+                <stringProp name="RegexExtractor.regex">&lt;title&gt;(.*?)&lt;/title&gt;</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number">1</stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="getOG_Title" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                <stringProp name="RegexExtractor.refname">og_title</stringProp>
+                <stringProp name="RegexExtractor.regex">&lt;meta property=&quot;og:title&quot; content=(.*?) /&gt;</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number">1</stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="getDescription" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                <stringProp name="RegexExtractor.refname">description</stringProp>
+                <stringProp name="RegexExtractor.regex">&lt;meta name=&quot;description&quot; content=(.*?) /&gt;</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number">1</stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="getOG_Description" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                <stringProp name="RegexExtractor.refname">og_description</stringProp>
+                <stringProp name="RegexExtractor.regex">&lt;meta property=&quot;og:description&quot; content=(.*?) /&gt;</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number">1</stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="getH1" enabled="true">
+                <stringProp name="RegexExtractor.useHeaders">false</stringProp>
+                <stringProp name="RegexExtractor.refname">h1</stringProp>
+                <stringProp name="RegexExtractor.regex">&lt;h1 class=&quot;search-modal__h1&quot;&gt;(.*?)&lt;/h1&gt;</stringProp>
+                <stringProp name="RegexExtractor.template">$1$</stringProp>
+                <stringProp name="RegexExtractor.default"></stringProp>
+                <stringProp name="RegexExtractor.match_number">1</stringProp>
+              </RegexExtractor>
+              <hashTree/>
+              <BeanShellPostProcessor guiclass="TestBeanGUI" testclass="BeanShellPostProcessor" testname="BeanShell PostProcessor" enabled="true">
+                <stringProp name="filename"></stringProp>
+                <stringProp name="parameters"></stringProp>
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="script">import java.utils.*;
 import java.io.*;
 
 page = vars.get(&quot;page&quot;);
@@ -134,19 +145,38 @@ description = vars.get(&quot;description&quot;);
 og_title = vars.get(&quot;og_title&quot;);
 og_description = vars.get(&quot;og_description&quot;);
 h1 = vars.get(&quot;h1&quot;);
-path_to_file = vars.get(&quot;path_to_file&quot;);
+path_to_result = vars.get(&quot;path_to_result&quot;);
 
 //log.info(email);  // if you want to log something to jmeter.log file
 
 // Pass true if you want to append to existing file
 // If you want to overwrite, then don&apos;t pass the second argument
-f = new FileOutputStream(path_to_file, true);
+f = new FileOutputStream(path_to_result, true);
 p = new PrintStream(f); 
 this.interpreter.setOut(p); 
-print(page + &quot;,&quot; + title + &quot;,&quot; + description + &quot;,&quot; + og_title + &quot;,&quot; + og_description + &quot;,&quot; + h1 );
+print(page + &quot;\t&quot; + title + &quot;\t&quot; + description + &quot;\t&quot; + og_title + &quot;\t&quot; + og_description + &quot;\t&quot; + h1 );
 f.close();</stringProp>
-            </BeanShellPostProcessor>
-            <hashTree/>
+              </BeanShellPostProcessor>
+              <hashTree/>
+              <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="BeanShell PreProcessor" enabled="true">
+                <stringProp name="filename"></stringProp>
+                <stringProp name="parameters"></stringProp>
+                <boolProp name="resetInterpreter">false</boolProp>
+                <stringProp name="script">import java.utils.*;
+import java.io.*;
+
+String path = vars.get(&quot;page&quot;);
+String domain = vars.get(&quot;domain&quot;);
+Integer domain_length = domain.length();
+String tmp = path.substring(domain_length );
+path = tmp;
+
+vars.put(&quot;path&quot;, path);
+
+</stringProp>
+              </BeanShellPreProcessor>
+              <hashTree/>
+            </hashTree>
           </hashTree>
           <BeanShellSampler guiclass="BeanShellSamplerGui" testclass="BeanShellSampler" testname="BeanShell Sampler" enabled="false">
             <stringProp name="BeanShellSampler.query">import java.utils.*;
@@ -181,8 +211,6 @@ f.close();</stringProp>
           </elementProp>
           <stringProp name="HTTPSampler.domain">${page}</stringProp>
           <stringProp name="HTTPSampler.port"></stringProp>
-          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
-          <stringProp name="HTTPSampler.response_timeout"></stringProp>
           <stringProp name="HTTPSampler.protocol">https</stringProp>
           <stringProp name="HTTPSampler.contentEncoding"></stringProp>
           <stringProp name="HTTPSampler.path"></stringProp>
@@ -191,8 +219,9 @@ f.close();</stringProp>
           <boolProp name="HTTPSampler.auto_redirects">false</boolProp>
           <boolProp name="HTTPSampler.use_keepalive">true</boolProp>
           <boolProp name="HTTPSampler.DO_MULTIPART_POST">false</boolProp>
-          <boolProp name="HTTPSampler.monitor">false</boolProp>
           <stringProp name="HTTPSampler.embedded_url_re"></stringProp>
+          <stringProp name="HTTPSampler.connect_timeout"></stringProp>
+          <stringProp name="HTTPSampler.response_timeout"></stringProp>
         </HTTPSamplerProxy>
         <hashTree/>
         <DebugSampler guiclass="TestBeanGUI" testclass="DebugSampler" testname="Debug Sampler" enabled="false">
@@ -239,5 +268,9 @@ f.close();</stringProp>
       </ResultCollector>
       <hashTree/>
     </hashTree>
+    <WorkBench guiclass="WorkBenchGui" testclass="WorkBench" testname="WorkBench" enabled="true">
+      <boolProp name="WorkBench.save">true</boolProp>
+    </WorkBench>
+    <hashTree/>
   </hashTree>
 </jmeterTestPlan>
